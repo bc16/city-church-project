@@ -153,10 +153,16 @@ textarea{min-height:120px;resize:vertical}
 .back-to-top{position:fixed;right:20px;bottom:20px;z-index:90;width:48px;height:48px;border-radius:50%;border:1px solid var(--line);background:#fff;box-shadow:var(--shadow);font-size:1.3rem;cursor:pointer;opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .25s,transform .25s}
 .back-to-top.show{opacity:1;pointer-events:auto;transform:translateY(0)}
 
-/* ---------- Reveal on scroll ---------- */
-html.js .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
-.reveal.visible{opacity:1;transform:none}
-@media (prefers-reduced-motion:reduce){html.js .reveal{opacity:1;transform:none}}
+/* ---------- Reveal on scroll — REMOVED 2026-11-05 ----------
+   The reveal animation hid content at opacity:0 and only un-hid it via JS.
+   On GitHub Pages that blanked the whole live site: the hiding rule
+   (html.js .reveal, specificity 0,2,1) beat the un-hiding rule
+   (.reveal.visible, 0,2,0), so even when JS correctly added .visible,
+   opacity stayed 0 forever. Header/footer (not .reveal) still showed.
+   Fix: no hiding at all. Content is always visible; JS still adds
+   .visible harmlessly. Never re-add an opacity:0 reveal without
+   testing it live in a real browser. */
+.reveal{opacity:1;transform:none}
 
 /* ---------- Responsive ---------- */
 @media (max-width:900px){
